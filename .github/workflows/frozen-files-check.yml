@@ -1,0 +1,38 @@
+name: Frozen Files Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  guard-frozen-files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Block edits to frozen files
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            base_ref="origin/${{ github.base_ref }}"
+            git fetch origin "${{ github.base_ref }}" --depth=1
+            changed_files=$(git diff --name-only "$base_ref"...HEAD)
+          else
+            if git rev-parse HEAD^ >/dev/null 2>&1; then
+              changed_files=$(git diff --name-only HEAD^ HEAD)
+            else
+              changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
+            fi
+          fi
+          echo "$changed_files"
+          blocked=$(echo "$changed_files" | grep -E '^(src/eval/|src/pipeline/prepare\.py$|src/pipeline/build_features\.py$|src/run\.py$)' || true)
+          if [[ -n "$blocked" ]]; then
+            echo "Frozen files were modified:"
+            echo "$blocked"
+            exit 1
+          fi

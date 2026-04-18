@@ -1,0 +1,78 @@
+release_event_id,artist_name,release_name,release_type,release_date,release_source
+rel_bts_2025_07_18,BTS,Permission to Dance on Stage - Live,album,2025-07-18,wikipedia_verified
+rel_agustd_2024_07_05,Agust D,D-Day,album,2024-07-05,wikipedia_verified
+rel_jhope_2024_03_29,j-hope,Hope on the Street Vol. 1,ep,2024-03-29,wikipedia_verified
+rel_jungkook_2024_06_07,Jung Kook,Never Let Go,single,2024-06-07,wikipedia_verified
+rel_jennie_2024_10_11,JENNIE,Mantra,single,2024-10-11,wikipedia_verified
+rel_jennie_2025_01_25,JENNIE,Zen,mv,2025-01-25,wikipedia_verified
+rel_jennie_2025_01_31,JENNIE,Love Hangover,single,2025-01-31,wikipedia_verified
+rel_jennie_2025_02_21,JENNIE,ExtraL,single,2025-02-21,wikipedia_verified
+rel_jennie_2025_03_07,JENNIE,Ruby,album,2025-03-07,wikipedia_verified
+rel_jennie_2025_03_10,JENNIE,Handlebars,mv,2025-03-10,wikipedia_verified
+rel_jennie_2025_04_26,JENNIE,Seoul City,mv,2025-04-26,wikipedia_verified
+rel_blackpink_2025_07_11,BLACKPINK,Jump,single,2025-07-11,wikipedia_verified
+rel_cortis_2025_08_11,CORTIS,Go!,single,2025-08-11,wikipedia_verified
+rel_cortis_2025_08_18,CORTIS,What You Want,single,2025-08-18,wikipedia_verified
+rel_cortis_2025_09_08,CORTIS,Color Outside the Lines,ep,2025-09-08,wikipedia_verified
+rel_hearts2hearts_2025_02_24,Hearts2Hearts,The Chase,album,2025-02-24,wikipedia_verified
+rel_hearts2hearts_2025_02_24,Hearts2Hearts,The Chase,single,2025-02-24,wikipedia_verified
+rel_hearts2hearts_2025_10_20,Hearts2Hearts,Focus,ep,2025-10-20,wikipedia_verified
+rel_katseye_2024_06_28,KATSEYE,Debut,single,2024-06-28,wikipedia_verified
+rel_katseye_2024_07_26,KATSEYE,Touch,single,2024-07-26,wikipedia_verified
+rel_katseye_2024_08_16,KATSEYE,SIS (Soft Is Strong),ep,2024-08-16,wikipedia_verified
+rel_katseye_2024_11_14,KATSEYE,Flame,single,2024-11-14,wikipedia_verified
+rel_katseye_2025_04_30,KATSEYE,Gnarly,single,2025-04-30,wikipedia_verified
+rel_katseye_2025_06_27,KATSEYE,Beautiful Chaos,ep,2025-06-27,wikipedia_verified
+rel_straykids_2024_05_17,Stray Kids,Lose My Breath,single,2024-05-17,wikipedia_verified
+rel_straykids_2024_11_13,Stray Kids,Giant,album,2024-11-13,wikipedia_verified
+rel_straykids_2024_11_13,Stray Kids,Giant,single,2024-11-13,wikipedia_verified
+rel_straykids_2025_08_22,Stray Kids,Karma,album,2025-08-22,wikipedia_verified
+rel_twice_2024_02_02,TWICE,I Got You,single,2024-02-02,wikipedia_verified
+rel_twice_2024_02_23,TWICE,With You-th,ep,2024-02-23,wikipedia_verified
+rel_twice_2024_07_17,TWICE,Dive,album,2024-07-17,wikipedia_verified
+rel_twice_2024_12_06,TWICE,Strategy,ep,2024-12-06,wikipedia_verified
+rel_twice_2025_07_11,TWICE,This Is For,album,2025-07-11,wikipedia_verified
+rel_twice_2025_07_11,TWICE,This Is For,single,2025-07-11,wikipedia_verified
+rel_aespa_2024_05_13,aespa,Supernova,single,2024-05-13,wikipedia_verified
+rel_aespa_2024_05_27,aespa,Armageddon,album,2024-05-27,wikipedia_verified
+rel_aespa_2024_05_27,aespa,Armageddon,single,2024-05-27,wikipedia_verified
+rel_aespa_2024_10_21,aespa,Whiplash,ep,2024-10-21,wikipedia_verified
+rel_aespa_2024_10_21,aespa,Whiplash,single,2024-10-21,wikipedia_verified
+rel_lisa_2024_06_27,LISA,Rockstar,single,2024-06-27,wikipedia_verified
+rel_lisa_2024_08_15,LISA,New Woman,single,2024-08-15,wikipedia_verified
+rel_lisa_2025_02_07,LISA,Born Again,single,2025-02-07,wikipedia_verified
+rel_lisa_2025_02_28,LISA,Alter Ego,album,2025-02-28,wikipedia_verified
+rel_lisa_2025_02_28,LISA,Fxck Up the World,mv,2025-02-28,wikipedia_verified
+rel_lisa_2025_05_16,LISA,When I'm with You,mv,2025-05-16,wikipedia_verified
+rel_lesserafim_2024_02_19,LE SSERAFIM,Easy,ep,2024-02-19,wikipedia_verified
+rel_lesserafim_2024_02_19,LE SSERAFIM,Easy,single,2024-02-19,wikipedia_verified
+rel_lesserafim_2024_08_30,LE SSERAFIM,Crazy,ep,2024-08-30,wikipedia_verified
+rel_lesserafim_2024_08_30,LE SSERAFIM,Crazy,single,2024-08-30,wikipedia_verified
+rel_lesserafim_2025_03_14,LE SSERAFIM,Hot,ep,2025-03-14,wikipedia_verified
+rel_lesserafim_2025_03_14,LE SSERAFIM,Hot,single,2025-03-14,wikipedia_verified
+rel_rose_2024_10_18,ROSÉ,APT.,single,2024-10-18,wikipedia_verified
+rel_rose_2024_11_22,ROSÉ,Number One Girl,mv,2024-11-22,wikipedia_verified
+rel_rose_2024_12_06,ROSÉ,Rosie,album,2024-12-06,wikipedia_verified
+rel_rose_2024_12_06,ROSÉ,Toxic Till the End,mv,2024-12-06,wikipedia_verified
+rel_rose_2025_05_08,ROSÉ,Messy,mv,2025-05-08,wikipedia_verified
+rel_v_2024_03_15,V,Fri(end)s,single,2024-03-15,wikipedia_verified
+rel_v_2024_11_29,V,Winter Ahead,single,2024-11-29,wikipedia_verified
+rel_ateez_2024_05_31,ATEEZ,Golden Hour: Part.1,ep,2024-05-31,wikipedia_verified
+rel_ateez_2024_05_31,ATEEZ,Work,single,2024-05-31,wikipedia_verified
+rel_ateez_2024_11_15,ATEEZ,Golden Hour: Part.2,ep,2024-11-15,wikipedia_verified
+rel_itzy_2024_01_08,ITZY,Born to Be,ep,2024-01-08,wikipedia_verified
+rel_itzy_2024_10_15,ITZY,Gold,ep,2024-10-15,wikipedia_verified
+rel_itzy_2025_06_09,ITZY,Girls Will Be Girls,ep,2025-06-09,wikipedia_verified
+rel_p1harmony_2024_02_05,P1Harmony,Killin' It,album,2024-02-05,wikipedia_verified
+rel_p1harmony_2024_02_05,P1Harmony,Killin' It,single,2024-02-05,wikipedia_verified
+rel_p1harmony_2024_09_20,P1Harmony,Sad Song,ep,2024-09-20,wikipedia_verified
+rel_p1harmony_2024_09_20,P1Harmony,Sad Song,single,2024-09-20,wikipedia_verified
+rel_p1harmony_2025_05_08,P1Harmony,Duh!,ep,2025-05-08,wikipedia_verified
+rel_p1harmony_2025_05_08,P1Harmony,Duh!,single,2025-05-08,wikipedia_verified
+rel_babymonster_2024_02_01,BABYMONSTER,Stuck in the Middle,single,2024-02-01,wikipedia_verified
+rel_babymonster_2024_04_01,BABYMONSTER,Babymons7er,ep,2024-04-01,wikipedia_verified
+rel_babymonster_2024_11_01,BABYMONSTER,Drip,album,2024-11-01,wikipedia_verified
+rel_babymonster_2024_11_01,BABYMONSTER,Drip,single,2024-11-01,wikipedia_verified
+rel_illit_2024_03_25,ILLIT,Super Real Me,ep,2024-03-25,wikipedia_verified
+rel_illit_2024_10_21,ILLIT,I'll Like You,ep,2024-10-21,wikipedia_verified
+rel_illit_2025_06_16,ILLIT,Bomb,ep,2025-06-16,wikipedia_verified

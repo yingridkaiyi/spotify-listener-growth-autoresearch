@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify Listener Growth AutoResearch Workflow</title>
+<style>
+  body { font-family: "Avenir Next", "Segoe UI", sans-serif; margin: 0; padding: 32px; background: #faf8f3; color: #22223b; }
+  .page { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 3rem; margin: 0 0 8px; letter-spacing: -0.04em; }
+  p { color: #4c4c63; margin: 0 0 24px; }
+  .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start; }
+  .box { border: 2px solid #7d82e0; background: #fff; border-radius: 14px; padding: 18px; min-height: 110px; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+  .box strong { display: block; font-size: 1rem; margin-bottom: 6px; }
+  .muted { color: #5c5c74; font-size: 0.95rem; line-height: 1.35; }
+  .arrow { text-align: center; font-size: 2rem; color: #7d82e0; align-self: center; }
+  .row { display: contents; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <h1>AutoResearch for 30-Day Spotify Listener Growth</h1>
+    <p>Frozen listener-growth dataset, time-based evaluation, and iterative feature/model improvement.</p>
+    <div class="flow">
+      <div class="box"><strong>1. Load Frozen Dataset</strong><div class="muted">Use the processed artist-date panel with lagged listener features plus concert and release aggregates.</div></div>
+      <div class="arrow">→</div>
+      <div class="box"><strong>2. Read Rules and Current Best</strong><div class="muted">Check the program instructions, baseline, and most recent validation results.</div></div>
+
+      <div class="box"><strong>3. Edit Search Space</strong><div class="muted">Agent may change only <code>features.py</code> and <code>model.py</code>.</div></div>
+      <div class="arrow">→</div>
+      <div class="box"><strong>4. Run Frozen Experiment</strong><div class="muted">Compute validation RMSE on the time-based holdout with untouched prep, split, and evaluation logic.</div></div>
+
+      <div class="box"><strong>5. Compare RMSE</strong><div class="muted">Check whether the new model beats the current best and the naive baseline.</div></div>
+      <div class="arrow">→</div>
+      <div class="box"><strong>6. Keep or Discard</strong><div class="muted">Keep improvements, discard regressions, then log the result and continue the search loop.</div></div>
+    </div>
+  </div>
+</body>
+</html>

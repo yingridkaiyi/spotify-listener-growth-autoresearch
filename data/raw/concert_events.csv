@@ -1,0 +1,21 @@
+event_id,artist_name,tour_name,event_name,event_date,venue_name,venue_city,venue_state,venue_country,venue_type,venue_capacity,event_source,source_rank
+tm_bts_tampa_2026_04_25,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN TAMPA,2026-04-25,Raymond James Stadium,Tampa,FL,USA,stadium,65000,ticketmaster,7
+tm_bts_tampa_2026_04_26,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN TAMPA,2026-04-26,Raymond James Stadium,Tampa,FL,USA,stadium,65000,ticketmaster,7
+tm_bts_elpaso_2026_05_02,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN EL PASO,2026-05-02,Sun Bowl Stadium,El Paso,TX,USA,stadium,,ticketmaster,7
+tm_bts_elpaso_2026_05_03,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN EL PASO,2026-05-03,Sun Bowl Stadium,El Paso,TX,USA,stadium,,ticketmaster,7
+tm_bts_stanford_2026_05_16,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN STANFORD,2026-05-16,Stanford Stadium,Stanford,CA,USA,stadium,,ticketmaster,7
+tm_bts_stanford_2026_05_17,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN STANFORD,2026-05-17,Stanford Stadium,Stanford,CA,USA,stadium,,ticketmaster,7
+tm_bts_lasvegas_2026_05_23,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN LAS VEGAS,2026-05-23,Allegiant Stadium,Las Vegas,NV,USA,stadium,,ticketmaster,7
+tm_bts_lasvegas_2026_05_24,BTS,ARIRANG WORLD TOUR,BTS WORLD TOUR 'ARIRANG' IN LAS VEGAS,2026-05-24,Allegiant Stadium,Las Vegas,NV,USA,stadium,,ticketmaster,7
+tm_jennie_queens_2026_06_07,JENNIE,Governors Ball 2026,The Governors Ball Music Festival,2026-06-07,Flushing Meadows Park,Queens,NY,USA,festival,,30,k-pop
+tm_katseye_queens_2026_06_05,KATSEYE,Governors Ball 2026,The Governors Ball Music Festival,2026-06-05,Flushing Meadows Park,Queens,NY,USA,festival,,87,k-pop
+tm_lisa_lasvegas_2026_11_13,LISA,VIVA LA LISA,VIVA LA LISA,2026-11-13,The Colosseum at Caesars Palace,Las Vegas,NV,USA,theater,4300,ticketmaster,115
+tm_lisa_lasvegas_2026_11_14,LISA,VIVA LA LISA,VIVA LA LISA,2026-11-14,The Colosseum at Caesars Palace,Las Vegas,NV,USA,theater,4300,ticketmaster,115
+tm_straykids_queens_2026_06_06,Stray Kids,Governors Ball 2026,The Governors Ball Music Festival,2026-06-06,Flushing Meadows Park,Queens,NY,USA,festival,,228,k-pop
+tm_twice_washingtondc_2026_02_13,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN WASHINGTON DC,2026-02-13,Capital One Arena,Washington,DC,USA,arena,,ticketmaster,289
+tm_twice_washingtondc_2026_02_14,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN WASHINGTON DC,2026-02-14,Capital One Arena,Washington,DC,USA,arena,,ticketmaster,289
+tm_twice_belmontpark_2026_02_18,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN BELMONT PARK,2026-02-18,UBS Arena,Belmont Park,NY,USA,arena,,ticketmaster,289
+tm_twice_belmontpark_2026_02_20,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN BELMONT PARK,2026-02-20,UBS Arena,Belmont Park,NY,USA,arena,,ticketmaster,289
+tm_twice_belmontpark_2026_02_21,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN BELMONT PARK,2026-02-21,UBS Arena,Belmont Park,NY,USA,arena,,ticketmaster,289
+tm_twice_orlando_2026_03_27,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN ORLANDO,2026-03-27,Kia Center,Orlando,FL,USA,arena,18500,ticketmaster,289
+tm_twice_orlando_2026_03_28,TWICE,THIS IS FOR WORLD TOUR,TWICE [THIS IS FOR] WORLD TOUR IN ORLANDO,2026-03-28,Kia Center,Orlando,FL,USA,arena,18500,ticketmaster,289
