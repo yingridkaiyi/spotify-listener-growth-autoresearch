@@ -22,7 +22,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 def model_name() -> str:
-    return "agent_ridge_v1"
+    return "search_ridge_start_v1"
 
 
 def build_estimator():

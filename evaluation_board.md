@@ -5,7 +5,7 @@
 - Train cutoff: `2025-08-14`
 - Validation cutoff: `2025-11-27`
 - Test cutoff: `2026-03-13`
-- Current agent model: `agent_ridge_v1`
+- Current agent model: `search_ridge_start_v1`
 - Current validation RMSE: `1941818.05`
 - Current validation MAE: `1474525.79`
 - Current validation MAPE: `18.074705`
