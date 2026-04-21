@@ -18,11 +18,25 @@ This repository predicts `30-day Spotify monthly listener growth` for K-pop arti
 - Agent-editable code lives under `src/agent_loop/features.py` and `src/agent_loop/model.py`
 - Canonical processed dataset: `data/processed/master_growth_dataset.csv`
 
+## Setup
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+The project was validated locally with `Python 3.13.3`.
+
 ## Core Commands
 ```bash
 python3 src/pipeline/prepare.py
 python3 src/run.py
 ```
+
+## Reproducibility Notes
+- The repository includes the processed dataset, so no external data download is required for the baseline run.
+- A full run of `python3 src/run.py` completed successfully in `11.75` seconds wall-clock time in a local test environment.
+- See `research_log.md` for the runtime assessment entry.
 
 ## Repository URL
 - GitHub: <https://github.com/yingridkaiyi/spotify-listener-growth-autoresearch>
