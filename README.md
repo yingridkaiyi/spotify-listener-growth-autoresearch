@@ -10,7 +10,7 @@ This repository predicts `30-day Spotify monthly listener growth` for K-pop arti
 - Official baseline for course reporting: `ridge_baseline`
 - Official baseline estimator: median imputation + `StandardScaler` + `Ridge(alpha=1.0)`
 - Comparison baselines that remain in frozen evaluation output: `zero_growth_baseline`, `previous_30d_growth_baseline`
-- Editable search model: `src/agent_loop/model.py`, currently initialized as `search_ridge_start_v1`
+- Editable search model: `src/agent_loop/model.py`, currently initialized as `search_huber_v1`
 - Reporting note: if a comparison baseline beats ridge on RMSE, treat that as a diagnostic result rather than a change to the official baseline policy
 
 ## Repository Rules
@@ -37,6 +37,10 @@ python3 src/run.py
 - The repository includes the processed dataset, so no external data download is required for the baseline run.
 - A full run of `python3 src/run.py` completed successfully in `11.75` seconds wall-clock time in a local test environment.
 - See `research_log.md` for the runtime assessment entry.
+
+## Week 3 Artifacts
+- Agent loop contract: `program.md`
+- Week 3 dry-run deliverable: `week3_agent_loop.md`
 
 ## Repository URL
 - GitHub: <https://github.com/yingridkaiyi/spotify-listener-growth-autoresearch>

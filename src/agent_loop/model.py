@@ -16,18 +16,18 @@ for candidate in [
         site.addsitedir(str(candidate))
 
 from sklearn.impute import SimpleImputer
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import HuberRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 
 def model_name() -> str:
-    return "search_ridge_start_v1"
+    return "search_huber_v1"
 
 
 def build_estimator():
     return Pipeline([
         ("imputer", SimpleImputer(strategy="median")),
         ("scaler", StandardScaler()),
-        ("ridge", Ridge(alpha=1.0)),
+        ("huber", HuberRegressor()),
     ])

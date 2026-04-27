@@ -5,12 +5,12 @@
 - Train cutoff: `2025-08-14`
 - Validation cutoff: `2025-11-27`
 - Test cutoff: `2026-03-13`
-- Current agent model: `search_ridge_start_v1`
-- Current validation RMSE: `1941818.05`
-- Current validation MAE: `1474525.79`
-- Current validation MAPE: `18.074705`
-- Current validation Spearman: `0.273982`
-- Best stored validation RMSE: `1941818.05`
+- Current agent model: `search_huber_v1`
+- Current validation RMSE: `1422490.72`
+- Current validation MAE: `940201.06`
+- Current validation MAPE: `7.789217`
+- Current validation Spearman: `0.385037`
+- Best stored validation RMSE: `1422490.72`
 
 ## Frozen Files
 - `src/eval/*`
