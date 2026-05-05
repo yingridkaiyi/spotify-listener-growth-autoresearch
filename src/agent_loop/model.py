@@ -15,19 +15,66 @@ for candidate in [
     if candidate.exists() and str(candidate) not in sys.path:
         site.addsitedir(str(candidate))
 
+import numpy as np
+from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.linear_model import HuberRegressor
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import HuberRegressor
+from sklearn.preprocessing import FunctionTransformer, StandardScaler
+
+from src.agent_loop.features import FEATURE_COLUMNS, get_active_feature_set_name
+
+LOG_SCALE_COLUMNS = [
+    "listeners_today",
+    "listeners_lag_7d",
+    "listeners_lag_30d",
+    "instagram_followers",
+    "spotify_followers",
+    "spotify_playlist_reach",
+    "tiktok_followers",
+    "tiktok_likes",
+    "youtube_daily_video_views",
+    "youtube_monthly_audience",
+    "youtube_subscribers",
+    "chartmetric_score",
+]
+OTHER_COLUMNS = [column for column in FEATURE_COLUMNS if column not in LOG_SCALE_COLUMNS]
+
+
+def log1p_clip_nonnegative(X):
+    return np.log1p(np.clip(X, a_min=0, a_max=None))
 
 
 def model_name() -> str:
-    return "search_huber_v1"
+    return f"search_huber_week4_{get_active_feature_set_name()}_v1"
 
 
 def build_estimator():
     return Pipeline([
-        ("imputer", SimpleImputer(strategy="median")),
-        ("scaler", StandardScaler()),
-        ("huber", HuberRegressor()),
+        ("preprocess", ColumnTransformer([
+            (
+                "log_scale",
+                Pipeline([
+                    ("imputer", SimpleImputer(strategy="median")),
+                    (
+                        "log",
+                        FunctionTransformer(
+                            log1p_clip_nonnegative,
+                            feature_names_out="one-to-one",
+                        ),
+                    ),
+                    ("scaler", StandardScaler()),
+                ]),
+                LOG_SCALE_COLUMNS,
+            ),
+            (
+                "other",
+                Pipeline([
+                    ("imputer", SimpleImputer(strategy="median")),
+                    ("scaler", StandardScaler()),
+                ]),
+                OTHER_COLUMNS,
+            ),
+        ])),
+        ("huber", HuberRegressor(max_iter=500)),
     ])

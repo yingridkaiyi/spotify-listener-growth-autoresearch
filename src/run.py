@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 from datetime import datetime
 from pathlib import Path
 import csv
@@ -35,6 +36,18 @@ LOG_PATH = EXPERIMENTS_DIR / "experiment_log.tsv"
 ARTIFACT_PATH = EXPERIMENTS_DIR / "best_model_artifact.pkl"
 BOARD_PATH = ROOT / "evaluation_board.md"
 MASTER_PATH = ROOT / "data" / "processed" / "master_growth_dataset.csv"
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Run listener-growth experiments in search or final-eval mode."
+    )
+    parser.add_argument(
+        "--final-eval",
+        action="store_true",
+        help="Reveal and log test metrics after model selection.",
+    )
+    return parser.parse_args()
 
 
 def _ensure_log_header() -> None:
@@ -74,9 +87,35 @@ def _append_log(model_label: str, split_name: str, metrics: dict, rows: int) -> 
 def _load_best_rmse() -> float | None:
     if not ARTIFACT_PATH.exists():
         return None
-    with ARTIFACT_PATH.open("rb") as handle:
-        payload = pickle.load(handle)
+    try:
+        with ARTIFACT_PATH.open("rb") as handle:
+            payload = pickle.load(handle)
+    except (AttributeError, EOFError, ModuleNotFoundError, pickle.UnpicklingError):
+        return None
     return payload.get("validation_metrics", {}).get("rmse")
+
+
+def _load_artifact_payload() -> dict | None:
+    if not ARTIFACT_PATH.exists():
+        return None
+    try:
+        with ARTIFACT_PATH.open("rb") as handle:
+            return pickle.load(handle)
+    except (AttributeError, EOFError, ModuleNotFoundError, pickle.UnpicklingError):
+        return None
+
+
+def _write_artifact_payload(payload: dict) -> None:
+    with ARTIFACT_PATH.open("wb") as handle:
+        pickle.dump(payload, handle)
+
+
+def _strip_test_metrics_from_artifact() -> None:
+    payload = _load_artifact_payload()
+    if payload is None or "test_metrics" not in payload:
+        return
+    del payload["test_metrics"]
+    _write_artifact_payload(payload)
 
 
 def _write_board(best_rmse: float | None, current_metrics: dict, split_meta: dict, rows: int) -> None:
@@ -109,54 +148,62 @@ def _write_board(best_rmse: float | None, current_metrics: dict, split_meta: dic
 
 
 def main() -> int:
+    args = _parse_args()
     save_dataset(MASTER_PATH)
     feature_frame = load_feature_frame()
     split_data = time_based_split(feature_frame)
 
     train = split_data["train"]
     validation = split_data["validation"]
-    test = split_data["test"]
 
     estimator = build_estimator()
     estimator.fit(train[FEATURE_COLUMNS], train[TARGET_COLUMN])
     validation_pred = estimator.predict(validation[FEATURE_COLUMNS])
     validation_metrics = evaluate_regression(validation[TARGET_COLUMN], validation_pred)
-    test_pred = estimator.predict(test[FEATURE_COLUMNS])
-    test_metrics = evaluate_regression(test[TARGET_COLUMN], test_pred)
 
     baseline_metrics = evaluate_baselines(train, validation)
     for baseline in baseline_metrics:
         _append_log(baseline["model_name"], "validation", baseline, len(validation))
 
     _append_log(model_name(), "validation", validation_metrics, len(validation))
-    _append_log(model_name(), "test", test_metrics, len(test))
 
     best_rmse = _load_best_rmse()
-    if best_rmse is None or validation_metrics["rmse"] < best_rmse:
-        with ARTIFACT_PATH.open("wb") as handle:
-            pickle.dump(
-                {
-                    "model_name": model_name(),
-                    "estimator": estimator,
-                    "feature_columns": FEATURE_COLUMNS,
-                    "validation_metrics": validation_metrics,
-                    "test_metrics": test_metrics,
-                },
-                handle,
-            )
+    is_best = best_rmse is None or validation_metrics["rmse"] < best_rmse
+    if is_best:
+        payload = {
+            "model_name": model_name(),
+            "estimator": estimator,
+            "feature_columns": FEATURE_COLUMNS,
+            "validation_metrics": validation_metrics,
+        }
+        _write_artifact_payload(payload)
         best_rmse = validation_metrics["rmse"]
 
+    output = {
+        "master_dataset": str(MASTER_PATH),
+        "rows": len(feature_frame),
+        "validation_metrics": validation_metrics,
+        "log": str(LOG_PATH),
+        "artifact": str(ARTIFACT_PATH),
+        "mode": "final_eval" if args.final_eval else "search",
+    }
+
+    if args.final_eval:
+        test = split_data["test"]
+        test_pred = estimator.predict(test[FEATURE_COLUMNS])
+        test_metrics = evaluate_regression(test[TARGET_COLUMN], test_pred)
+        _append_log(model_name(), "test", test_metrics, len(test))
+        output["test_metrics"] = test_metrics
+
+        payload = _load_artifact_payload()
+        if payload is not None and payload.get("model_name") == model_name():
+            payload["test_metrics"] = test_metrics
+            _write_artifact_payload(payload)
+    else:
+        _strip_test_metrics_from_artifact()
+
     _write_board(best_rmse, validation_metrics, split_data["cutoffs"], len(feature_frame))
-    print(
-        {
-            "master_dataset": str(MASTER_PATH),
-            "rows": len(feature_frame),
-            "validation_metrics": validation_metrics,
-            "test_metrics": test_metrics,
-            "log": str(LOG_PATH),
-            "artifact": str(ARTIFACT_PATH),
-        }
-    )
+    print(output)
     return 0
 
 
