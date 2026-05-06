@@ -94,6 +94,43 @@ RELEASE_MOMENTUM_INTERACTION_COLUMNS = [
     "release_last_30d_x_prev_30d_positive_spike",
 ]
 
+RATIO_FAMILY_COLUMNS = [
+    "listener_change_prev_7d_ratio",
+    "listener_change_prev_30d_ratio",
+]
+
+FEATURE_ENGINEERING_REGISTRY = {
+    "control_week3_features": [],
+    "release_timing_family": RELEASE_TIMING_COLUMNS,
+    "concert_timing_family": CONCERT_TIMING_COLUMNS,
+    "negative_regime_family": NEGATIVE_REGIME_COLUMNS,
+    "release_plus_regime_combo": RELEASE_TIMING_COLUMNS + NEGATIVE_REGIME_COLUMNS,
+    "momentum_gap_family": MOMENTUM_GAP_COLUMNS,
+    "spike_flag_family": SPIKE_FLAG_COLUMNS,
+    "release_plus_momentum_family": RELEASE_TIMING_COLUMNS + MOMENTUM_GAP_COLUMNS,
+    "breakout_full_combo": (
+        RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + MOMENTUM_GAP_COLUMNS
+        + SPIKE_FLAG_COLUMNS
+        + RELEASE_MOMENTUM_INTERACTION_COLUMNS
+    ),
+    "ratio_family": RELEASE_TIMING_COLUMNS + NEGATIVE_REGIME_COLUMNS + RATIO_FAMILY_COLUMNS,
+}
+
+FEATURE_SET_SUMMARIES = {
+    "control_week3_features": "Week 3 retained control feature set with no additional engineered flags.",
+    "release_timing_family": "Week 3 control plus release-window proximity flags for recent and upcoming releases.",
+    "concert_timing_family": "Week 3 control plus upcoming concert-window proximity flags.",
+    "negative_regime_family": "Week 3 control plus negative-growth and near-flat regime indicators.",
+    "release_plus_regime_combo": "Week 3 control plus release-window flags and negative/flat regime indicators.",
+    "momentum_gap_family": "Week 3 control plus short-vs-long momentum gap features.",
+    "spike_flag_family": "Week 3 control plus spike, decline, and high-growth-rate indicators.",
+    "release_plus_momentum_family": "Week 3 control plus release-window flags and momentum-gap features.",
+    "breakout_full_combo": "Week 3 control plus release/regime/momentum/spike features and release-spike interactions.",
+    "ratio_family": "Release/regime feature family plus audience-scaled recent-change ratio features.",
+}
+
 FEATURE_SET_REGISTRY = {
     "control_week3_features": WEEK3_CONTROL_COLUMNS,
     "release_timing_family": WEEK3_CONTROL_COLUMNS + RELEASE_TIMING_COLUMNS,
@@ -115,9 +152,15 @@ FEATURE_SET_REGISTRY = {
         + SPIKE_FLAG_COLUMNS
         + RELEASE_MOMENTUM_INTERACTION_COLUMNS
     ),
+    "ratio_family": (
+        WEEK3_CONTROL_COLUMNS
+        + RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + RATIO_FAMILY_COLUMNS
+    ),
 }
 
-ACTIVE_FEATURE_SET = "release_plus_regime_combo"
+ACTIVE_FEATURE_SET = "ratio_family"
 FEATURE_SET_ENV_VAR = "STAT390_WEEK4_FEATURE_SET"
 
 
@@ -129,6 +172,25 @@ def get_active_feature_set_name() -> str:
             f"Unknown feature set '{selected}'. Expected one of: {available}."
         )
     return selected
+
+
+def get_feature_spec(feature_set_name: str | None = None) -> dict:
+    selected = feature_set_name or get_active_feature_set_name()
+    if selected not in FEATURE_SET_REGISTRY:
+        available = ", ".join(sorted(FEATURE_SET_REGISTRY))
+        raise ValueError(
+            f"Unknown feature set '{selected}'. Expected one of: {available}."
+        )
+    return {
+        "feature_set_name": selected,
+        "feature_columns": list(FEATURE_SET_REGISTRY[selected]),
+        "engineered_features": list(FEATURE_ENGINEERING_REGISTRY[selected]),
+        "summary": FEATURE_SET_SUMMARIES[selected],
+    }
+
+
+def get_active_feature_spec() -> dict:
+    return get_feature_spec()
 
 
 FEATURE_COLUMNS = FEATURE_SET_REGISTRY[get_active_feature_set_name()]
@@ -211,6 +273,12 @@ def build_feature_matrix(dataset):
     )
     frame["release_last_30d_x_prev_30d_positive_spike"] = (
         frame["release_within_last_30d_flag"] * frame["prev_30d_positive_spike_flag"]
+    )
+    frame["listener_change_prev_7d_ratio"] = frame["listener_change_prev_7d"].div(
+        frame["listeners_today"].replace(0, pd.NA)
+    )
+    frame["listener_change_prev_30d_ratio"] = frame["listener_change_prev_30d"].div(
+        frame["listeners_today"].replace(0, pd.NA)
     )
 
     return frame[[*ID_COLUMNS, TARGET_COLUMN, *FEATURE_COLUMNS]]
