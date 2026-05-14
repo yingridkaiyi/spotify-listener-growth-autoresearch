@@ -38,9 +38,33 @@ python3 src/run.py
 - A full run of `python3 src/run.py` completed successfully in `11.75` seconds wall-clock time in a local test environment.
 - See `research_log.md` for the runtime assessment entry.
 
-## Week 3 Artifacts
-- Agent loop contract: `program.md`
-- Week 3 dry-run deliverable: `week3_agent_loop.md`
+## Autoresearch Agent Prompt (Sample)
+```text
+You are the AutoResearch agent for this repo. Read `program.md`, inspect the
+recent experiment logs and latest commit, then run one hypothesis-driven search
+iteration.
+
+Follow the rules in `program.md` exactly:
+- only edit `src/agent_loop/features.py` and/or `src/agent_loop/model.py`
+- do not edit frozen files
+- make one small model or feature change
+- run `python3 src/run.py`
+- immediately run `python3 src/log_experiment_details.py` with hypothesis,
+  changed components, why, decision, and decision reason
+- compare against the active generalization anchor using the keep/discard
+  guardrails
+- keep the change only if it wins under those guardrails
+- if discarded, restore the retained default behavior while preserving the
+  logged challenger result
+
+After the run, report:
+- what hypothesis was tested
+- what files changed
+- validation RMSE, MAE, MAPE, and Spearman
+- keep/discard decision
+- whether the active retained model changed
+- the next best hypothesis to try
+```
 
 ## Repository URL
 - GitHub: <https://github.com/yingridkaiyi/spotify-listener-growth-autoresearch>

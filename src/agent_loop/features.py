@@ -99,6 +99,16 @@ RATIO_FAMILY_COLUMNS = [
     "listener_change_prev_30d_ratio",
 ]
 
+LOWER_CLIPPED_RATIO_FAMILY_COLUMNS = [
+    "listener_change_prev_7d_ratio_lower_clip",
+    "listener_change_prev_30d_ratio_lower_clip",
+]
+
+WINSORIZED_RATIO_FAMILY_COLUMNS = [
+    "listener_change_prev_7d_ratio_winsor",
+    "listener_change_prev_30d_ratio_winsor",
+]
+
 FEATURE_ENGINEERING_REGISTRY = {
     "control_week3_features": [],
     "release_timing_family": RELEASE_TIMING_COLUMNS,
@@ -116,6 +126,14 @@ FEATURE_ENGINEERING_REGISTRY = {
         + RELEASE_MOMENTUM_INTERACTION_COLUMNS
     ),
     "ratio_family": RELEASE_TIMING_COLUMNS + NEGATIVE_REGIME_COLUMNS + RATIO_FAMILY_COLUMNS,
+    "ratio_lower_clip_family": (
+        RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + LOWER_CLIPPED_RATIO_FAMILY_COLUMNS
+    ),
+    "ratio_winsor_family": (
+        RELEASE_TIMING_COLUMNS + NEGATIVE_REGIME_COLUMNS + WINSORIZED_RATIO_FAMILY_COLUMNS
+    ),
 }
 
 FEATURE_SET_SUMMARIES = {
@@ -129,6 +147,8 @@ FEATURE_SET_SUMMARIES = {
     "release_plus_momentum_family": "Week 3 control plus release-window flags and momentum-gap features.",
     "breakout_full_combo": "Week 3 control plus release/regime/momentum/spike features and release-spike interactions.",
     "ratio_family": "Release/regime feature family plus audience-scaled recent-change ratio features.",
+    "ratio_lower_clip_family": "Ratio family variant that lower-clips audience-scaled recent-change ratios at -1.0 to reduce tiny-denominator artifacts.",
+    "ratio_winsor_family": "Ratio family variant that broadly winsorizes audience-scaled recent-change ratios to reduce tiny-denominator artifacts and extreme surge leverage.",
 }
 
 FEATURE_SET_REGISTRY = {
@@ -157,6 +177,18 @@ FEATURE_SET_REGISTRY = {
         + RELEASE_TIMING_COLUMNS
         + NEGATIVE_REGIME_COLUMNS
         + RATIO_FAMILY_COLUMNS
+    ),
+    "ratio_lower_clip_family": (
+        WEEK3_CONTROL_COLUMNS
+        + RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + LOWER_CLIPPED_RATIO_FAMILY_COLUMNS
+    ),
+    "ratio_winsor_family": (
+        WEEK3_CONTROL_COLUMNS
+        + RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + WINSORIZED_RATIO_FAMILY_COLUMNS
     ),
 }
 
@@ -280,5 +312,17 @@ def build_feature_matrix(dataset):
     frame["listener_change_prev_30d_ratio"] = frame["listener_change_prev_30d"].div(
         frame["listeners_today"].replace(0, pd.NA)
     )
+    frame["listener_change_prev_7d_ratio_lower_clip"] = frame[
+        "listener_change_prev_7d_ratio"
+    ].clip(lower=-1.0)
+    frame["listener_change_prev_30d_ratio_lower_clip"] = frame[
+        "listener_change_prev_30d_ratio"
+    ].clip(lower=-1.0)
+    frame["listener_change_prev_7d_ratio_winsor"] = frame[
+        "listener_change_prev_7d_ratio"
+    ].clip(lower=-0.10, upper=0.40)
+    frame["listener_change_prev_30d_ratio_winsor"] = frame[
+        "listener_change_prev_30d_ratio"
+    ].clip(lower=-0.35, upper=0.80)
 
     return frame[[*ID_COLUMNS, TARGET_COLUMN, *FEATURE_COLUMNS]]

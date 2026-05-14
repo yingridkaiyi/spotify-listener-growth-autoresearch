@@ -111,40 +111,93 @@ Model changes are allowed in:
 
 High-priority directions:
 
-- Robust or heteroskedastic-friendly linear models:
-  - `HuberRegressor`
-  - `ElasticNet`
-  - `QuantileRegressor` if runtime stays acceptable
-- Better preprocessing:
-  - log-scaling
-  - clipped scaling
-  - robust scaling
-  - selective transforms by feature family
-- Target handling:
-  - target transforms
-  - weighted objectives that reduce domination by rare extreme surges while
-    still protecting RMSE
-- Feature engineering:
-  - release-window indicators
-  - regime flags
-  - momentum-gap features
-  - breakout-size proxies
-  - interactions between release timing and recent trend
-- Calibration-focused changes:
-  - features that estimate burst magnitude, not just burst timing
+- Calibration-focused Huber improvements:
+  - add simple prediction-shape features that help the retained Huber model
+    correct breakout underprediction without moving to a high-variance ensemble
+  - prefer changes that improve RMSE while preserving or improving MAPE
+  - treat any RMSE gain under `10,000` as insufficient if MAPE gets worse
+
+- Magnitude-aware regime features:
+  - split recent movement into signed magnitude features, not only binary flags
+  - examples:
+    - `positive_change_prev_7d_abs`
+    - `positive_change_prev_30d_abs`
+    - `negative_change_prev_7d_abs`
+    - `negative_change_prev_30d_abs`
+  - hypothesis: the model needs to distinguish mild negative drift from large
+    listener collapses to reduce negative-regime overprediction
+
+- Smooth release-timing features:
+  - replace or supplement hard release-window flags with decay-style timing
+    features
+  - examples:
+    - `release_recency_decay = 1 / (1 + days_since_last_release)`
+    - `release_anticipation_decay = 1 / (1 + days_until_next_release)`
+  - hypothesis: release impact likely fades smoothly rather than changing only
+    at 7-day or 30-day cutoffs
+
+- Small release-by-momentum interactions:
+  - avoid the full breakout interaction set unless smaller interactions fail
+  - test one narrow interaction family at a time
+  - examples:
+    - `release_within_last_30d_flag * listener_change_prev_7d_ratio`
+    - `release_in_next_30d_flag * listener_change_prev_7d_ratio`
+    - `release_within_last_30d_flag * listener_growth_rate_prev_7d`
+  - hypothesis: the ratio-family signal is most useful when release context
+    confirms that recent movement is music-event driven
+
+- Conservative target-shape experiments:
+  - try `TransformedTargetRegressor` only if it stays sklearn-compatible and
+    finishes under the runtime limit
+  - candidate transform:
+    - signed log target: `sign(y) * log1p(abs(y))`
+  - hypothesis: compressing rare extreme surges may reduce validation overfit
+    while still preserving direction and magnitude ordering
+  - discard immediately if absolute-scale RMSE clearly worsens
+
+- Conservative sample-weighting experiments:
+  - test simple target-magnitude or regime-based weights only inside
+    `src/agent_loop/model.py`
+  - avoid complex per-row rules that look like validation memorization
+  - hypothesis: modestly reducing domination by rare extreme surge rows may
+    improve generalization without losing the breakout signal entirely
+
+Lower-priority directions:
+
+- Additional Huber epsilon sweeps:
+  - only revisit if paired with a clearly justified feature change
+  - prior sweeps showed small MAE/MAPE gains but limited RMSE gains
+
+- Additional Huber-plus-tree ensembles:
+  - treat as suspicious unless they clear the complex-model guardrails by a
+    wide margin
+  - prior ensembles improved validation RMSE but generalized worse on final
+    evaluation than the simpler ratio-family Huber anchor
+
+- Ratio clipping or winsorization:
+  - do not prioritize broad clipping of the existing ratio features
+  - recent probes improved RMSE slightly but worsened MAPE, failing the
+    simple-Huber tie-break guardrail
 
 Current failure modes to target:
 
 - **breakout underprediction**
-  - rare very large positive surges are still the biggest RMSE driver
+  - rare very large positive surges remain the biggest RMSE driver
+  - prioritize features that estimate burst magnitude only when release or
+    momentum context supports it
+
 - **negative-regime overprediction**
   - flat or negative periods can still be predicted too positively
+  - prioritize signed magnitude and decay features that separate mild drift from
+    large declines
 
 Current generalization lesson:
 
-- the strongest ensemble improved validation RMSE sharply, but its final test
-  RMSE and Spearman were weaker than the simpler ratio-family Huber anchor
+- the strongest ensembles improved validation RMSE sharply, but their final
+  test RMSE and Spearman were weaker than the simpler ratio-family Huber anchor
 - use conservative ensembles only when they clear the explicit acceptance bar
+- prefer simple Huber-family models with better feature calibration over
+  additional nonlinear complexity
 
 ## Logging Expectations
 
