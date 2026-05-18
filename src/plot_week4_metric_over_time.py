@@ -22,8 +22,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
-MATRIX_PATH = ROOT / "week4_experiment_result_matrix.md"
-OUTPUT_PATH = ROOT / "week4_metric_over_time.png"
+DELIVERABLES_DIR = ROOT / "deliverables"
+MATRIX_PATH = DELIVERABLES_DIR / "week4_experiment_result_matrix.md"
+OUTPUT_PATH = DELIVERABLES_DIR / "week4_metric_over_time.png"
 
 RETAINED_RUN = 26
 HISTORICAL_BEST_RUN = 24

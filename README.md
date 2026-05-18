@@ -38,6 +38,9 @@ python3 src/run.py
 - A full run of `python3 src/run.py` completed successfully in `11.75` seconds wall-clock time in a local test environment.
 - See `research_log.md` for the runtime assessment entry.
 
+## Deliverables
+- Course deliverables and supporting Week 1-5 artifacts live in `deliverables/`.
+
 ## Autoresearch Agent Prompt (Sample)
 ```text
 You are the AutoResearch agent for this repo. Read `program.md`, inspect the

@@ -33,7 +33,7 @@ from src.agent_loop.model import (
 EXPERIMENTS_DIR = ROOT / "experiments"
 LOG_PATH = EXPERIMENTS_DIR / "experiment_log.tsv"
 DETAIL_LOG_PATH = EXPERIMENTS_DIR / "experiment_detail_log.tsv"
-MATRIX_PATH = ROOT / "week4_experiment_result_matrix.md"
+MATRIX_PATH = ROOT / "deliverables" / "week4_experiment_result_matrix.md"
 
 DETAIL_LOG_HEADER = [
     "logged_at",

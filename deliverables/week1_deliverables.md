@@ -7,19 +7,19 @@ platform, concert, and release features.**
 
 The Week 1 deliverables are now:
 
-- [week1_project_charter.md](/Users/ingridyeung/Desktop/STAT390/spotify-listener-growth-autoresearch/week1_project_charter.md)
-- [workflow_diagram_listener_growth.html](/Users/ingridyeung/Desktop/STAT390/spotify-listener-growth-autoresearch/workflow_diagram_listener_growth.html)
+- [week1_project_charter.md](week1_project_charter.md)
+- [workflow_diagram_listener_growth.html](workflow_diagram_listener_growth.html)
 
 ## Deliverable Checklist
 
 - one-page project charter:
-  [week1_project_charter.md](/Users/ingridyeung/Desktop/STAT390/spotify-listener-growth-autoresearch/week1_project_charter.md)
+  [week1_project_charter.md](week1_project_charter.md)
 - one clear research question:
   included in the charter
 - one success criterion:
   included in the charter
 - one AutoResearch workflow diagram:
-  [workflow_diagram_listener_growth.html](/Users/ingridyeung/Desktop/STAT390/spotify-listener-growth-autoresearch/workflow_diagram_listener_growth.html)
+  [workflow_diagram_listener_growth.html](workflow_diagram_listener_growth.html)
 - one risk list:
   included in the charter
 - one first draft repository structure:
