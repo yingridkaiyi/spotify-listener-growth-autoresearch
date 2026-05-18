@@ -5,11 +5,11 @@
 - Train cutoff: `2025-08-14`
 - Validation cutoff: `2025-11-27`
 - Test cutoff: `2026-03-13`
-- Current agent model: `search_week4_ratio_family_huber_eps_1_25_v1`
-- Current validation RMSE: `1324378.94`
-- Current validation MAE: `859645.95`
-- Current validation MAPE: `5.184773`
-- Current validation Spearman: `0.457998`
+- Current agent model: `search_week4_ratio_release_interaction_family_huber_eps_1_25_v1`
+- Current validation RMSE: `1321827.56`
+- Current validation MAE: `855576.66`
+- Current validation MAPE: `4.773756`
+- Current validation Spearman: `0.451507`
 - Best stored validation RMSE: `1248417.77`
 
 ## Frozen Files

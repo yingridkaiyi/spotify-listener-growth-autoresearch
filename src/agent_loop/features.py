@@ -109,6 +109,10 @@ WINSORIZED_RATIO_FAMILY_COLUMNS = [
     "listener_change_prev_30d_ratio_winsor",
 ]
 
+RELEASE_RATIO_INTERACTION_COLUMNS = [
+    "release_last_30d_x_listener_change_prev_7d_ratio",
+]
+
 FEATURE_ENGINEERING_REGISTRY = {
     "control_week3_features": [],
     "release_timing_family": RELEASE_TIMING_COLUMNS,
@@ -134,6 +138,12 @@ FEATURE_ENGINEERING_REGISTRY = {
     "ratio_winsor_family": (
         RELEASE_TIMING_COLUMNS + NEGATIVE_REGIME_COLUMNS + WINSORIZED_RATIO_FAMILY_COLUMNS
     ),
+    "ratio_release_interaction_family": (
+        RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + RATIO_FAMILY_COLUMNS
+        + RELEASE_RATIO_INTERACTION_COLUMNS
+    ),
 }
 
 FEATURE_SET_SUMMARIES = {
@@ -149,6 +159,7 @@ FEATURE_SET_SUMMARIES = {
     "ratio_family": "Release/regime feature family plus audience-scaled recent-change ratio features.",
     "ratio_lower_clip_family": "Ratio family variant that lower-clips audience-scaled recent-change ratios at -1.0 to reduce tiny-denominator artifacts.",
     "ratio_winsor_family": "Ratio family variant that broadly winsorizes audience-scaled recent-change ratios to reduce tiny-denominator artifacts and extreme surge leverage.",
+    "ratio_release_interaction_family": "Ratio family plus a narrow recent-release by 7-day audience-scaled momentum interaction.",
 }
 
 FEATURE_SET_REGISTRY = {
@@ -190,9 +201,16 @@ FEATURE_SET_REGISTRY = {
         + NEGATIVE_REGIME_COLUMNS
         + WINSORIZED_RATIO_FAMILY_COLUMNS
     ),
+    "ratio_release_interaction_family": (
+        WEEK3_CONTROL_COLUMNS
+        + RELEASE_TIMING_COLUMNS
+        + NEGATIVE_REGIME_COLUMNS
+        + RATIO_FAMILY_COLUMNS
+        + RELEASE_RATIO_INTERACTION_COLUMNS
+    ),
 }
 
-ACTIVE_FEATURE_SET = "ratio_family"
+ACTIVE_FEATURE_SET = "ratio_release_interaction_family"
 FEATURE_SET_ENV_VAR = "STAT390_WEEK4_FEATURE_SET"
 
 
@@ -324,5 +342,8 @@ def build_feature_matrix(dataset):
     frame["listener_change_prev_30d_ratio_winsor"] = frame[
         "listener_change_prev_30d_ratio"
     ].clip(lower=-0.35, upper=0.80)
+    frame["release_last_30d_x_listener_change_prev_7d_ratio"] = (
+        frame["release_within_last_30d_flag"] * frame["listener_change_prev_7d_ratio"]
+    )
 
     return frame[[*ID_COLUMNS, TARGET_COLUMN, *FEATURE_COLUMNS]]
